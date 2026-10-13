@@ -19,7 +19,8 @@ import {
   Volume2,
   VolumeX,
   Zap,
-  Star
+  Star,
+  User
 } from 'lucide-react';
 import { QUESTIONS } from './data/questions';
 import { DiagramRenderer } from './components/DiagramRenderer';
@@ -312,6 +313,14 @@ export default function App() {
     setActiveHintTab(null);
   };
 
+  const handleNameChange = (name: string) => {
+    setStudentNameInput(name);
+    setProgress((prev) => ({
+      ...prev,
+      studentName: name,
+    }));
+  };
+
   const handleRestartQuiz = () => {
     const fresh: QuizProgress = {
       ...INITIAL_PROGRESS,
@@ -453,6 +462,11 @@ export default function App() {
                 <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider bg-[#16352B] text-[#34D399] border border-[#235343] rounded-md">
                   Core Diagnostic
                 </span>
+                {studentNameInput.trim() && (
+                  <span className="hidden md:inline-block px-2 py-0.5 text-[10px] font-semibold bg-[#0E2E20] text-[#6EE7B7] border border-[#10B981]/30 rounded-md">
+                    Candidate: {studentNameInput.trim()}
+                  </span>
+                )}
               </div>
               <p className="text-xs text-slate-400 hidden sm:block">
                 Interactive Practice with Tiered Rewards · 25 Questions
@@ -523,6 +537,43 @@ export default function App() {
           /* QUESTION VIEW */
           /* ========================================== */
           <div className="space-y-6">
+            {/* Student Name Input Strip */}
+            <div className="bg-[#111F1D] rounded-2xl p-4 sm:p-5 border border-[#1E3A33] shadow-lg shadow-black/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-[#142B23] border border-[#21473A] text-[#34D399] flex items-center justify-center shrink-0">
+                  <User className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <label htmlFor="student-name-input" className="text-xs font-extrabold uppercase tracking-wider text-slate-200">
+                      Student Name / Candidate
+                    </label>
+                    {studentNameInput.trim() && (
+                      <span className="text-[10px] text-[#34D399] bg-[#0E2E20] border border-[#10B981]/40 px-1.5 py-0.5 rounded-md font-semibold">
+                        Auto-Saved
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    {studentNameInput.trim()
+                      ? `Candidate: ${studentNameInput.trim()} (will appear on your PDF diagnostic report)`
+                      : 'Enter your name to personalize your diagnostic report'}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 sm:max-w-xs w-full">
+                <input
+                  id="student-name-input"
+                  type="text"
+                  value={studentNameInput}
+                  onChange={(e) => handleNameChange(e.target.value)}
+                  placeholder="Type your name here..."
+                  className="flex-1 px-3.5 py-2 text-sm bg-[#0E1A18] border border-[#24453C] rounded-xl text-white placeholder-slate-500 focus:outline-hidden focus:border-[#34D399] focus:ring-1 focus:ring-[#34D399] transition-all"
+                />
+              </div>
+            </div>
+
             {/* Quick Question Navigator (Top of Questions Page) */}
             <div className="bg-[#111F1D] rounded-2xl p-4 sm:p-5 border border-[#1E3A33] shadow-lg shadow-black/25 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
