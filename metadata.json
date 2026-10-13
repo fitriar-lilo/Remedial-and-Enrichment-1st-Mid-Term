@@ -1,0 +1,6 @@
+{
+  "name": "IGCSE Math Master - 25 Question Practice",
+  "description": "Interactive 25-question IGCSE Mathematics (0580) practice quiz for middle-to-low ability students featuring progressive hints, tiered scoring, auto-save, and PDF reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
